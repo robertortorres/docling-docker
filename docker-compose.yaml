@@ -1,0 +1,21 @@
+---
+
+services:
+  docling:
+    image: ghcr.io/docling-project/docling-serve-cu124
+    container_name: docling-serve
+    ports:
+      - 5001:5001  # Expõe a UI no localhost:5001
+    environment:
+      - DOCLING_SERVE_ENABLE_UI=true
+    volumes:
+      - /storage/docling:/app/data  # monta a pasta de dados do host
+
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+#    runtime: nvidia  # necessário para GPUs
